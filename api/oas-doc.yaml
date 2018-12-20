@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  description: API for creating a bulletin board
+  version: 1.0.0
+  title: AOS API
+paths:
+  /notes:
+    post:
+      x-router-controller: notesController
+      summary: Register a new note
+      operationId: registerNote
+      responses:
+        '201':
+          description: Valid note
+      requestBody:
+        x-name: note
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+        description: Note to be registered
+        required: true
+    get:
+      x-router-controller: notesController
+      summary: Obtain all the notes
+      operationId: getNotes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+  '/notes/{noteId}':
+    put:
+      x-router-controller: notesController
+      summary: Update a note
+      operationId: updateNote
+      parameters:
+        - name: noteId
+          in: path
+          description: Note Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '204':
+          description: Note updated
+    delete:
+      x-router-controller: notesController
+      summary: Delete a note
+      operationId: deleteNote
+      parameters:
+        - name: noteId
+          in: path
+          description: Note Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Note updated
+servers:
+  - url: /api/v1
